@@ -1,0 +1,33 @@
+name: Workflow
+
+on: 
+  pull_request:
+    branches:
+      - master
+      - release
+      - develop
+  push:
+    branches:
+      - tests
+
+env:
+  STUDENT_NAME: Караяниди Богдан Евгеньевич
+  STUDENT_GROUP_NUMBER: M3113
+
+jobs:
+  Tests:
+    runs-on: ubuntu-latest
+    steps:
+
+      - run: echo "$STUDENT_NAME $STUDENT_GROUP_NUMBER ${{ github.actor }}"
+
+      - uses: actions/setup-python@v4
+        with:
+            python-version: '3.13'
+            
+      - uses: actions/checkout@v3
+
+      - run: pip install -r requirements.txt
+
+      - run: pytest
+      - run: pylint --disable=W --disable=C --disable=R *.py

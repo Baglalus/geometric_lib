@@ -1,0 +1,35 @@
+name: Workflow
+
+on: 
+  push:
+    branches:
+      - tests
+  pull_request:
+      - tests
+
+env:
+  STUDENT_NAME: Караяниди Богдан Евгеньевич
+  STUDENT_GROUP_NUMBER: M3113
+
+jobs:
+  Tests:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Виновник торжества и говёных тестов
+      - run: echo "$STUDENT_NAME $STUDENT_GROUP_NUMBER ${{ github.actor }}"
+
+      - name: python <3
+      - uses: actions/setup-python@v4
+        with:
+            python-version: '3.13'
+
+      - name: GIVE ME FILES
+      - uses: actions/checkout@v3
+
+      - name: Resolve requirements
+      - run: pip install -r requirements.txt
+
+      - name: God is no longer after that
+      - run: pytest
+      - run: pylint --disable=W --disable=C --disable=R *.py
